@@ -1,0 +1,6 @@
+project:
+  title: "rpharma-opening-remarks"
+
+resources: 
+  - "webr-serviceworker.js"
+  - "webr-worker.js"

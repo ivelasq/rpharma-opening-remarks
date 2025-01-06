@@ -1,0 +1,6 @@
+- source: rpharma-opening-remarks.qmd
+  quarto-pub:
+    - id: 9b2f030c-7c49-44bc-a837-f18971f375b1
+      url: 'https://ivelasq.quarto.pub/rpharma-opening-remarks---day-3'
+    - id: 9c13070f-f094-4f0f-be19-411b4cc4c328
+      url: 'https://ivelasq.quarto.pub/rpharma-opening-remarks---day-3'

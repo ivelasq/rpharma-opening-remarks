@@ -1,0 +1,188 @@
+---
+title: "R/Pharma Opening Remarks - Day 3"
+subtitle: "Isabella Velásquez"
+title-slide-attributes: 
+  data-background-color: white
+  data-background-image: _extensions/jthomasmock/positslides/assets/backgrounds/sample-title-slide-option-1.png
+  data-background-size: contain
+format:
+  positslides-revealjs: 
+    width: "1920"
+    height: "1080"
+    transition: slide
+    background-transition: fade
+engine: knitr
+filters:
+  - shinylive
+  - webr
+---
+
+## Introduction
+
+<center>
+
+<img src="https://pbs.twimg.com/profile_images/1399221981061451781/aJvNk5sS_400x400.jpg" style="border-radius: 50%;" width="250px"/>
+
+[{{< fa brands github >}} \@ivelasq](https://github.com/ivelasq)
+
+[{{< fa brands twitter >}} \@ivelasq3](https://twitter.com/ivelasq3)
+
+[{{< fa brands mastodon >}} \@ivelasq3](https://fosstodon.org/@ivelasq3)
+
+[{{< fa link >}} ivelasq.rbind.io](https://ivelasq.rbind.io)
+
+</center>
+
+::: {.notes}
+Hello everybody, I am so excited to be here welcoming you to Day 3 of R/Pharma 2023. As someone not directly involved in the pharmaceutical industry, I am very honored to be part of this conference, virtually surrounded by dedicated professionals who are driving open-source advancements in the life sciences.
+:::
+
+## {background-color="#22394A" background-image="images/open.png"}
+
+::: {.notes}
+So, here I am, giving opening remarks at an open source conference. The word openness can conjure up many images. Since it’s 2023, you don’t even have to conjure them up yourself. I asked Microsoft Bing’s Image Creator powered by DALLE-3 to help us out. 
+:::
+
+## {background-color="#22394A" background-image="images/open-search.png"}
+
+::: {.notes}
+Looking up just the word ‘open’ resulted in a lot of things that literally say ‘open’. 
+:::
+
+## {background-color="#22394A" background-image="images/open-source-search.png"}
+
+::: {.notes}
+Looking up ‘open source’ gives us images of robots holding laptops that say open source, or, in this case, 
+:::
+
+## {background-color="#22394A" background-image="images/open-souce.png" transition="none" background-transition="none"}
+
+::: {.notes}
+open souce. And looking up “small, scientifically & industry oriented conference collegial event focused on the use of open source in the development of pharmaceuticals” gave me the realization 
+:::
+
+## {background-color="#22394A" background-image="images/rpharma.jpg"}
+
+::: {.notes}
+that this might just be the coolest conference in the world.
+:::
+
+## {background-color="#22394A" background-image="images/open.png"}
+
+:::{.notes}
+So, back to the world of 'open.' It spans from open-source robots misspelling their own signage to the aspirational idea of open innovation in pharma. I’d like to share one more output from Bing, “open door”. 
+:::
+
+## {background-color="#22394A" background-image="images/open-door-search.png"}
+
+:::{.notes}
+Funnily enough, when I searched this phrase, it showed me images of doors with a stop sign on them. I thought this was a good metaphor for the challenges faced when trying to implement and advance open source in the pharma. For many reasons, there may be constraints that slow the drive to open up. We all know that the pharmaceutical industry is incredibly competitive. It's a world where organizations invest enormous resources in the hopes of discovering life-saving drugs, and being the first to do so can make all the difference. Also, these hesitations and "stop signs" aren't only obstructions but can be vital checkpoints. They remind the industry that the primary commitment is to patient safety and that any breakthroughs must be rooted in the utmost care for those they are serving.
+:::
+
+## {background-color="#22394A" background-image="images/open-door-search-2.png"}
+
+:::{.notes}
+However, the path is there. Navigating the complexities of merging open source ideals with the demands of the industry might be challenging, but it's a journey filled with immense potential. Every door, even with a stop sign, can eventually be opened with the right key. That's what makes being part of a conference like this so special – it's all about coming together, sharing ideas, and collaborating. In a field where competition is fierce, this event is a celebration of teamwork and innovation.
+:::
+
+## {background-color="#22394A" background-image="images/rpharma2.jpg"}
+
+:::{.notes}
+By using open source, we're creating more conversations and collaborations. It's about transparency and working together because doing so ultimately drives better outcomes. This approach puts the pharma industry in the spotlight, highlighting its strengths and areas for growth.The increased attention because of open-source collaboration pushes us to do better and brings more innovation to pharma, and drives the industry to elevate its standards.
+:::
+
+## {background-color="#22394A" background-image="images/rpharma3.jpg"}
+
+:::{.notes}
+Science is a team effort, and successful open source adoption is dependent on many different components. From documentation to reporting to ensuring reproducibility, everybody plays a part. One awesome thing about R/Pharma is that it provides a platform for those often working behind the scenes. It's a space where individuals, who might not always get the spotlight, can share their insights, challenges, and successes. This recognition is essential, as it showcases the diverse efforts and contributions that drive the pharma industry forward, even if they aren't always in the headlines.
+:::
+
+## {background-color="#22394A" background-image="images/posit.png"}
+
+:::{.notes}
+In addition to being a proud sponsor of the conference, Posit is committed to elevating the work of the community. Through open-source tools like Shiny and Quarto, we hope to make it easy to create and share your work, ensuring that valuable contributions get the recognition and reach they deserve.
+:::
+
+## {background-color="white"}
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 600
+library(shiny)
+
+# Define UI for application that draws a histogram
+ui <- fluidPage(
+
+    # Application title
+    titlePanel("Old Faithful Geyser Data"),
+
+    # Sidebar with a slider input for number of bins 
+    sidebarLayout(
+        sidebarPanel(
+            sliderInput("bins",
+                        "Number of bins:",
+                        min = 1,
+                        max = 50,
+                        value = 30)
+        ),
+
+        # Show a plot of the generated distribution
+        mainPanel(
+           plotOutput("distPlot")
+        )
+    )
+)
+
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+
+    output$distPlot <- renderPlot({
+        # generate bins based on input$bins from ui.R
+        x    <- faithful[, 2]
+        bins <- seq(min(x), max(x), length.out = input$bins + 1)
+
+        # draw the histogram with the specified number of bins
+        hist(x, breaks = bins, col = 'darkgray', border = 'white',
+             xlab = 'Waiting time to next eruption (in mins)',
+             main = 'Histogram of waiting times')
+    })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+```
+
+:::{.notes}
+And as we've seen and will continue to see at this conference, the amazing developers at Posit have recently released several tools to engage your audience. For example, Shinylive allows you to deploy serverless Shiny applications in a variety of different ways, including in Quarto presentations like this one.
+:::
+
+## {background-color="#22394A" background-image="images/gt.png"}
+
+:::{.notes}
+Or {gt}, a package for making beautiful tables, which has seen an incredible number of new features and enhancements in the last year.
+:::
+
+## {background-color="#22394A" background-image="images/ai.png"}
+
+:::{.notes}
+And, the latest version of RStudio brings preview support for GitHub Copilot, an AI pair programmer so that you can use AI as you code, and the chattr package is an interface to Large Language Models so that you can interact with the model directly from RStudio.
+:::
+
+## {background-color="#22394A" background-image="images/adsl.png"}
+
+:::{.notes}
+From my perspective, being involved with R/Pharma has been immensely rewarding. I truly appreciate the opportunity to work with open-source tools from those who are sharing and collaborating in the pharma industry and being able to use our tools, like Quarto, to talk about them with others.
+:::
+
+## {background-color="#22394A" background-image="images/open-door.png"}
+
+:::{.notes}
+It's an honor to collaborate with such a dynamic community. I’m so excited about the strides you are making in open source and look forward to the continued partnership and growth of R/Pharma and seeing what’s next.
+:::
+
+## {background-color="#22394A" background-image="images/thank-you.png"}
+
+## Acknowledgments
+
+* Gustavo E. Velásquez
+* Joseph Rickert
